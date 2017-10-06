@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.util.Arrays;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int k = in.nextInt();
+        int[] x = new int[n];
+        for(int x_i=0; x_i < n; x_i++){
+            x[x_i] = in.nextInt();
+        }
+
+        Arrays.sort(x);
+        int numberOfTowers = 0;
+        
+        if(x.length != 0)
+        {
+            int previusTowerAtPos = x[0];
+            int distanceCoveredByTower = k*2 + 1;
+            
+//            System.out.println("distanceCoveredByTower "+distanceCoveredByTower);
+
+            numberOfTowers = 1;
+            for(int x_i=1; x_i < x.length; x_i++)
+            {
+//                System.out.println("x[x_i] "+x[x_i]+" (previusTowerAtPos + distanceCoveredByTower) "+ (previusTowerAtPos + distanceCoveredByTower));
+                if(x[x_i] > (previusTowerAtPos + distanceCoveredByTower - 1 ))
+                {
+                    numberOfTowers+=1;
+                    previusTowerAtPos = x[x_i];
+                }
+            }
+        }
+//        System.out.println("numberOfTowers "+numberOfTowers);
+        System.out.println(numberOfTowers);
+    }
+}

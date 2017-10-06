@@ -7,28 +7,31 @@ import java.util.regex.*;
 public class Solution {
 
     static String super_reduced_string(String s){
-        return reduced_string(s,0);
+        return reduce_string(s,s.length());
     }
 
-    static String reduced_string(String s, int pos) {
-        System.out.println("pos "+pos+" and length "+s.length());
-        if(s.length() == 0)
+    static String reduce_string(String s,int l)
+    {
+        // If length is zero initially or after recursion, then it returns empty string cause its suppose to.
+        if(l==0)
             return "Empty String";
-        if(pos + 1 >= s.length())
-            return s;
-        char str1 = s.charAt(pos);
-        char str2 = s.charAt(1+pos);
-        System.out.println("comparing "+str1+" and "+str2);
-        if(str1 == str2)
-        {
-            s = s.substring(0,pos) + s.substring(pos+2,s.length());
+        
+        // characters a and b will contain the two consecutive characters we are trying to compare.
+        char a=s.charAt(0);
+        char b;
+        // The for loop is also required as 
+        for(int i=1;i<l;i++){
+            b=s.charAt(i);
+            if(b==a){
+                // This step remove the consecutive same characters from the string.
+                s=s.substring(0,i-1)+s.substring(i+1,l);
+                // Here we reduce the length of the string by 2 chars. I first thought as to why do we modify the length around everywhere and why not just use s.length everywhere, but doing this saves us computation time.
+                l-=2;
+                // Here we call the reduce_string function recursively. The reason we do that is to find any new set of same characters ahead of this position, so that any far off repeated character can come closer as well.
+                return reduce_string(s,l);
+            }
+            a=b;
         }
-        else
-        {
-            pos++;
-        }
-        System.out.println("after "+pos+" iteration"+s);
-        s = reduced_string(s,pos);
         return s;
     }
     

@@ -1,29 +1,41 @@
-package Strings;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
 
-import java.util.Scanner;
+public class Solution {
 
-public class SuperReducedString {
-    public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        String s=sc.nextLine();
-        int l=s.length();
-        System.out.println(check(s,l));
+    static String super_reduced_string(String s){
+        return reduced_string(s,0);
+    }
+
+    static String reduced_string(String s, int pos) {
+        System.out.println("pos "+pos+" and length "+s.length());
+        if(s.length() == 0)
+            return "Empty String";
+        if(pos + 1 >= s.length())
+            return s;
+        char str1 = s.charAt(pos);
+        char str2 = s.charAt(1+pos);
+        System.out.println("comparing "+str1+" and "+str2);
+        if(str1 == str2)
+        {
+            s = s.substring(0,pos) + s.substring(pos+2,s.length());
+        }
+        else
+        {
+            pos++;
+        }
+        System.out.println("after "+pos+" iteration"+s);
+        s = reduced_string(s,pos);
+        return s;
     }
     
-    public static String check(String s,int l){
-        if(l==0)
-            return "Empty String";
-        char a=s.charAt(0);
-        char b;
-        for(int i=1;i<l;i++){
-            b=s.charAt(i);
-            if(b==a){
-                s=s.substring(0,i-1)+s.substring(i+1,l);
-                l-=2;
-                return check(s,l);
-            }
-            a=b;
-        }
-        return s;
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String s = in.next();
+        String result = super_reduced_string(s);
+        System.out.println(result);
     }
 }

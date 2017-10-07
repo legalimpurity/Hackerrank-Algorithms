@@ -14,33 +14,23 @@ public class Solution {
             unsorted[unsorted_i] = in.next();
         }
 
-        ArrayList<String> sortedarray = new ArrayList<String>();
-
-        for(int unsorted_i=0; unsorted_i < unsorted.length; unsorted_i++) {
-                       
-            boolean needToBeinserted = true;
-
-            String toBeSorted = unsorted[unsorted_i];
-            int unsortedlength = toBeSorted.length();
-            System.out.println("unsorted_i " + unsorted_i);
-            System.out.println("unsorted[unsorted_i]" + unsorted[unsorted_i]);
-
-            for(int sorted_j = 0; sorted_j+1 < sortedarray.size(); sorted_j++) {
-                System.out.println("sorted_j "+ sorted_j);
-                System.out.println("sortedarray.get(sorted_j) "+ sortedarray.get(sorted_j));
-                System.out.println("sortedarray.get(sorted_j).length() "+ sortedarray.get(sorted_j).length());
-                System.out.println("unsortedlength "+ unsortedlength);
-                if(unsortedlength < sortedarray.get(sorted_j).length()) {
-                    sortedarray.add(sorted_j,toBeSorted);
-                    needToBeinserted = false;
+        // So here we use a custom comparator to solve this rather than using my old approach.
+        Arrays.sort(unsorted, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                // Of course, we compare the length of the strings first and then we get done to comparing values.
+                if (o1.length() < o2.length()) {
+                    return -1;
                 }
+                if (o1.length() > o2.length()) {
+                    return 1;
+                }
+                return o1.compareTo(o2);
             }
-
-            if(needToBeinserted)
-                sortedarray.add(toBeSorted);
+        });
+        
+        for (String s : unsorted) {
+            System.out.println(s);
         }
-
-        for (int sorted_j = 0; sorted_j < sortedarray.size(); sorted_j++)
-            System.out.println(sortedarray.get(sorted_j));
-        }
+    }
 }

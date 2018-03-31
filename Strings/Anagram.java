@@ -1,43 +1,34 @@
-package Strings;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
 
-import java.util.Scanner;
-
-public class Anagram {
-    public static void main(String args[]){
-        Scanner sc = new Scanner(System.in);
-        //char word[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-        int c;
-        int n = sc.nextInt();
-        while(n--!=0){
-            c=0;
-            int count1[] = new int[26];
-            int count2[] = new int[26];
-            String s = sc.next();
-            int l = s.length();
-            if(l%2!=0)
-                System.out.println(-1);
-            else{
-            String s1 = s.substring(0,l/2);
-            String s2 = s.substring(l/2,l);
-            for(int j=0;j<26;j++){
-                for(int i=0;i<s1.length();i++){
-                    //if(word[j]==s1.charAt(i))
-                    if(97+j==s1.charAt(i))
-                        count1[j]++;
-                }
-            }
-            for(int j=0;j<26;j++){
-                for(int i=0;i<s2.length();i++){
-                    //if(word[j]==s2.charAt(i))
-                    if(97+j==s2.charAt(i))
-                        count2[j]++;
-                }
-            }
-            for(int i=0;i<26;i++){
-                c = c + (int)Math.abs(count1[i]-count2[i]);
-            }
-            System.out.println(c/2);
-            }
+public class Solution {
+    public static int numberNeeded(String first, String second) {
+      
+        int[] firstMap= getCharactersHistorgam(first);
+        int[] secondMap= getCharactersHistorgam(second);
+        int charactersToBeDeleted = 0;
+        for(int i =0; i < 26; i++)
+            charactersToBeDeleted += Math.abs(firstMap[i]-secondMap[i]);
+        return charactersToBeDeleted; 
+    }
+    
+    public static int[] getCharactersHistorgam(String stringToLook)
+    {
+        int counter[] = new int[26];
+        for(int i=0; i < stringToLook.length(); i++)
+        {
+            counter[stringToLook.charAt(i) - 'a']++;
         }
+        return counter;
+    }
+  
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String a = in.next();
+        String b = in.next();
+        System.out.println(numberNeeded(a, b));
     }
 }
